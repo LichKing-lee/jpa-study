@@ -2,6 +2,9 @@ package com.yong.jpa.product;
 
 import com.yong.jpa.common.Register;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,6 +13,8 @@ import javax.persistence.*;
  */
 @Entity
 @Data
+@RequiredArgsConstructor(staticName = "of")
+@NoArgsConstructor
 public class Product extends Register {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +22,11 @@ public class Product extends Register {
     private Long id;
 
     @Column(name = "product_name")
+    @NonNull
     private String name;
 
     @Column(name = "product_price")
+    @NonNull
     private int price;
 
 //    @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)

@@ -1,6 +1,7 @@
 package com.yong.jpa.purchase;
 
 import com.yong.jpa.common.Register;
+import com.yong.jpa.delivery.Delivery;
 import com.yong.jpa.member.Member;
 import lombok.Data;
 
@@ -19,20 +20,17 @@ public class Purchase extends Register {
     @Column(name = "purchase_id")
     private Long id;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "purchase_detail",
-//            joinColumns = @JoinColumn(name = "purchase_id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id")
-//    )
-//    private List<Product> products;
-
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_id")
     private List<PurchaseDetail> purchaseDetails;
+
+    @OneToOne
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     @Column(name = "purchase_status")
     @Enumerated(EnumType.STRING)
@@ -41,4 +39,8 @@ public class Purchase extends Register {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "purchase_datetime")
     private Calendar purchaseDatetime;
+
+    public Purchase(){
+        this.purchaseStatus = PurchaseStatus.ORDER;
+    }
 }

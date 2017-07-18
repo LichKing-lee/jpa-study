@@ -19,7 +19,7 @@ public class PurchaseDetail extends Register {
     private Long id;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(name = "purchase_count")
