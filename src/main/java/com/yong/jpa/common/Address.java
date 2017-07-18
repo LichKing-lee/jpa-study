@@ -1,13 +1,13 @@
 package com.yong.jpa.common;
 
-import lombok.Data;
+import lombok.Value;
 
 import javax.persistence.Column;
 
 /**
  * Created by lichking on 2017. 7. 18..
  */
-@Data
+@Value
 public class Address {
     @Column
     private String address;

@@ -1,5 +1,6 @@
 package com.yong.jpa.delivery;
 
+import com.yong.jpa.purchase.Purchase;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,9 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     @Column(name = "delivery_status", nullable = false)
     private DeliveryStatus deliveryStatus;
+
+    @OneToOne(mappedBy = "delivery")
+    private Purchase purchase;
 
     public Delivery(){
         this.deliveryStatus = DeliveryStatus.READY;

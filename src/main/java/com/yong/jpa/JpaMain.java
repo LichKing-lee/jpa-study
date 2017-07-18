@@ -1,5 +1,6 @@
 package com.yong.jpa;
 
+import com.yong.jpa.category.Category;
 import com.yong.jpa.delivery.Delivery;
 import com.yong.jpa.member.Member;
 import com.yong.jpa.product.Product;
@@ -22,6 +23,7 @@ public class JpaMain {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa");
 
         transaction(emf, createMember());
+        transaction(emf, createCategory());
         transaction(emf, createProduct());
         transaction(emf, createPurchase());
         transaction(emf, selectPurchase());
@@ -55,18 +57,38 @@ public class JpaMain {
         };
     }
 
+    private static Consumer<EntityManager> createCategory(){
+        return em -> {
+            Category category1 = new Category();
+            category1.setName("생필품");
+
+            Category category2 = new Category();
+            category2.setName("가전");
+
+            em.persist(category1);
+            em.persist(category2);
+        };
+    }
+
     private static Consumer<EntityManager> createProduct(){
         return em -> {
-            Product product11 = new Product();
-            product11.setName("상품1");
-            product11.setPrice(200);
+            Product product1 = new Product();
+            product1.setName("상품1");
+            product1.setPrice(200);
 
-            Product product21 = new Product();
-            product21.setName("상품2");
-            product21.setPrice(300);
+            Product product2 = new Product();
+            product2.setName("상품2");
+            product2.setPrice(300);
 
-            em.persist(product11);
-            em.persist(product21);
+            Category category = em.createQuery("SELECT c FROM Category c WHERE name = :name", Category.class)
+            .setParameter("name", "가전")
+            .getSingleResult();
+
+            product1.setCategory(category);
+            product2.setCategory(category);
+
+            em.persist(product1);
+            em.persist(product2);
         };
     }
 
@@ -83,10 +105,9 @@ public class JpaMain {
             purchaseDetail2.setProduct(product2);
             purchaseDetail2.setCount(5);
 
-            Delivery delivery = new Delivery();
-            em.persist(delivery);
-
             Member member = em.find(Member.class, 1L);
+
+            Delivery delivery = new Delivery();
 
             Purchase purchase = new Purchase();
             purchase.setMember(member);
@@ -103,7 +124,7 @@ public class JpaMain {
             System.out.println("start select");
             Purchase purchase = em.find(Purchase.class, 1L);
 
-            System.out.println(purchase);
+            System.out.println("purchase id :: " + purchase.getId());
         };
     }
 }

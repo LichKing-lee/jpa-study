@@ -28,7 +28,7 @@ public class Purchase extends Register {
     @JoinColumn(name = "purchase_id")
     private List<PurchaseDetail> purchaseDetails;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
