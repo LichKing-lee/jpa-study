@@ -20,7 +20,6 @@ public class Category {
     @Column(name = "category_name")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
+    @ManyToMany(mappedBy = "categories")
     private List<Product> products;
 }

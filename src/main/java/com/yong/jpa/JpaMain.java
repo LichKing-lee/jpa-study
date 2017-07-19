@@ -14,6 +14,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -28,6 +29,16 @@ public class JpaMain {
         transaction(emf, createProduct());
         transaction(emf, createPurchase());
         transaction(emf, selectPurchase());
+        transaction(emf, selectDelivery());
+    }
+
+    private static Consumer<EntityManager> selectDelivery() {
+        return em -> {
+            Delivery delivery = em.createQuery("SELECT d FROM Delivery d", Delivery.class)
+                    .getSingleResult();
+
+            System.out.println("purchase in delivery :: " + delivery.getPurchase().getId());
+        };
     }
 
     private static void transaction(EntityManagerFactory emf, Consumer<EntityManager> logic){
@@ -81,12 +92,15 @@ public class JpaMain {
             product2.setName("상품2");
             product2.setPrice(300);
 
-            Category category = em.createQuery("SELECT c FROM Category c WHERE name = :name", Category.class)
-            .setParameter("name", "가전")
-            .getSingleResult();
+//            Category category = em.createQuery("SELECT c FROM Category c WHERE name = :name", Category.class)
+//            .setParameter("name", "가전")
+//            .getSingleResult();
 
-            product1.setCategory(category);
-            product2.setCategory(category);
+            List<Category> categories = em.createQuery("SELECT c FROM Category c", Category.class)
+                    .getResultList();
+
+            product1.setCategories(categories);
+            product2.setCategories(categories);
 
             em.persist(product1);
             em.persist(product2);

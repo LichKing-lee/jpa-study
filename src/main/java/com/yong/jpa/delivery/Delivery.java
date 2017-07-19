@@ -21,7 +21,8 @@ public class Delivery {
     @Column(name = "delivery_status", nullable = false)
     private DeliveryStatus deliveryStatus;
 
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne
+    @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
     @Embedded

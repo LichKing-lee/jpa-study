@@ -28,8 +28,7 @@ public class Purchase extends Register {
     @JoinColumn(name = "purchase_id")
     private List<PurchaseDetail> purchaseDetails;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "delivery_id")
+    @OneToOne(mappedBy = "purchase", cascade = CascadeType.ALL)
     private Delivery delivery;
 
     @Column(name = "purchase_status")
@@ -42,5 +41,10 @@ public class Purchase extends Register {
 
     public Purchase(){
         this.purchaseStatus = PurchaseStatus.ORDER;
+    }
+
+    public void setDelivery(Delivery delivery){
+        this.delivery = delivery;
+        this.delivery.setPurchase(this);
     }
 }

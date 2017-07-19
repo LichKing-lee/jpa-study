@@ -5,6 +5,7 @@ import com.yong.jpa.common.Register;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by lichking on 2017. 7. 13..
@@ -23,7 +24,11 @@ public class Product extends Register {
     @Column(name = "product_price")
     private int price;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "category_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 }
