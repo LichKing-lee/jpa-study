@@ -1,5 +1,6 @@
 package com.yong.jpa.delivery;
 
+import com.yong.jpa.common.Address;
 import com.yong.jpa.purchase.Purchase;
 import lombok.Data;
 
@@ -22,6 +23,9 @@ public class Delivery {
 
     @OneToOne(mappedBy = "delivery")
     private Purchase purchase;
+
+    @Embedded
+    private Address address;
 
     public Delivery(){
         this.deliveryStatus = DeliveryStatus.READY;

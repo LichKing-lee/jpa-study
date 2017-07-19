@@ -1,6 +1,7 @@
 package com.yong.jpa;
 
 import com.yong.jpa.category.Category;
+import com.yong.jpa.common.Address;
 import com.yong.jpa.delivery.Delivery;
 import com.yong.jpa.member.Member;
 import com.yong.jpa.product.Product;
@@ -108,6 +109,8 @@ public class JpaMain {
             Member member = em.find(Member.class, 1L);
 
             Delivery delivery = new Delivery();
+            Address address = new Address("경기도 성남시 태평동");
+            delivery.setAddress(address);
 
             Purchase purchase = new Purchase();
             purchase.setMember(member);
@@ -124,7 +127,7 @@ public class JpaMain {
             System.out.println("start select");
             Purchase purchase = em.find(Purchase.class, 1L);
 
-            System.out.println("purchase id :: " + purchase.getId());
+            System.out.println("purchase id :: " + purchase.getDelivery().getAddress().getAddress());
         };
     }
 }
