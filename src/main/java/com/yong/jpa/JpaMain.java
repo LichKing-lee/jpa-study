@@ -5,6 +5,8 @@ import com.yong.jpa.common.Address;
 import com.yong.jpa.delivery.Delivery;
 import com.yong.jpa.member.Member;
 import com.yong.jpa.product.Product;
+import com.yong.jpa.product.classification.Book;
+import com.yong.jpa.product.classification.Music;
 import com.yong.jpa.purchase.Purchase;
 import com.yong.jpa.purchase.PurchaseDetail;
 
@@ -84,11 +86,11 @@ public class JpaMain {
 
     private static Consumer<EntityManager> createProduct(){
         return em -> {
-            Product product1 = new Product();
+            Product product1 = new Book();
             product1.setName("상품1");
             product1.setPrice(200);
 
-            Product product2 = new Product();
+            Product product2 = new Music();
             product2.setName("상품2");
             product2.setPrice(300);
 

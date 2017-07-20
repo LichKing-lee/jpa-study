@@ -12,7 +12,9 @@ import java.util.List;
  */
 @Entity
 @Data
-public class Product extends Register {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "product_type")
+public abstract class Product extends Register {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
