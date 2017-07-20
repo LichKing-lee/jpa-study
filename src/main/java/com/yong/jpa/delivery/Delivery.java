@@ -21,7 +21,7 @@ public class Delivery {
     @Column(name = "delivery_status", nullable = false)
     private DeliveryStatus deliveryStatus;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 

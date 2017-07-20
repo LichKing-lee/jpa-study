@@ -18,7 +18,7 @@ public class PurchaseDetail extends Register {
     @Column(name = "purchase_detail_id")
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
